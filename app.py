@@ -16,7 +16,7 @@ class Secert:
     def edit():
         pass
 
-class Login_pasword(secert):
+class Login_pasword(Secert):
     def __init__(self, id, secret_name, create_time, owner_id, secret_type,login,password,adress) -> None:
         super().__init__(id, secret_name, create_time, owner_id)
         self.secret_type = secret_type
