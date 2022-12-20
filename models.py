@@ -19,7 +19,7 @@ class Secrets(Base):
     name = Column(String(170))
     user_id = Column(Integer, ForeignKey("users.id"))
     sycret_type = Column(Integer, ForeignKey("secret_type.id"))
-    status = Column(int)
+    status = Column(Integer)
 
     def __repr__(self) -> str:
         return f'secrets {self.id}, {self.name}, {self.status}'
@@ -35,7 +35,7 @@ class Secret_type(Base):
 class login_password(Base):
     __tablename__ = "login_password"
     id = Column(Integer, primary_key=True)
-    sycret_store_type = Column(Integer, ForeignKey("secret_type.sycret_store_type"))
+    sycret_store_type = Column(Integer, ForeignKey("secret_type.id"))
     login = Column(String(1024))
     password = Column(String(2048))
     address = Column(String(256))
