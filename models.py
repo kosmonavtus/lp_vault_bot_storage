@@ -47,13 +47,5 @@ class login_password(Base):
 
 
 
-    
-
-
-
-    def __repr__(self) -> str:
-        return f'User {self.id}, {self.name}, {self.login}'
-
-
 if __name__ == "__main__":
     Base.metadata.create_all(bind=engine)
