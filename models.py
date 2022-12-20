@@ -8,7 +8,7 @@ class Users(Base):
     name = Column(String(170))
     login = Column(String(170), unique=True)
     password = Column(String(170))
-    status = Column(Boolean)
+    status = Column(Boolean, default=True)
 
     def __repr__(self) -> str:
         return f'User {self.id}, {self.name}, {self.login}'
