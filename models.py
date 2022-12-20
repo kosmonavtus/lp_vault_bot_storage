@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, func
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, func
 from db import Base, engine
 
 
@@ -8,7 +8,7 @@ class Users(Base):
     name = Column(String(170))
     login = Column(String(170), unique=True)
     password = Column(String(170))
-    status = Column(bool)
+    status = Column(Boolean)
 
     def __repr__(self) -> str:
         return f'User {self.id}, {self.name}, {self.login}'
