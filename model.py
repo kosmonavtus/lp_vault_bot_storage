@@ -11,7 +11,7 @@ class Users(Base):
     status = Column(Boolean, default=True)
 
     def __repr__(self) -> str:
-        return f'User {self.id}, {self.name}, {self.login}'
+        return f' id:{self.id}, name:{self.name}, login:{self.login}, status:{self.status}'
 
 class Secrets(Base):
     __tablename__ = "secrets"
