@@ -5,47 +5,31 @@ from flask_smorest import Api, Blueprint, abort
 from models import Users
 from db import db_session
 
-
-class Secert:
-    def __init__(self,id,name,user_id,sycret_type,status) -> None:
-        self.id = id
-        self.name = name
-        self.user_id = user_id
-        self.sycret_type = sycret_type
-        self.status = status
-    def write():
-        pass
-    def get():
-        pass
-    def edit():
-        pass
-
-class Login_pasword(Secert):
-    def __init__(self, id, name, user_id, sycret_type, status) -> None:
-        super().__init__(id, name, user_id, sycret_type, status)
-        
-    pass
+app = Flask(__name__)
+app.config["API_TITLE"] = "My API"
+app.config["API_VERSION"] = "v1"
+app.config["OPENAPI_VERSION"] = "3.0.2"
+api = Api(app)
 
 
-class Users:
-    def __init__(self, id,name,login,password,status) -> None:
-        self.id = id
-        self.name = name
-        self.login = login
-        self.password = password
-        self.status = status
-    def create_user():
-        pass
-    def delete_user():
-        pass
-    def show_user():
-        pass
+class UsersSchema(ma.Schema):
+    id = ma.fields.Int(dump_only=True)
+    name = ma.fields.String()
 
-def create_user(name, login, password):
-    user = Users(name=name, login=login, password=password)
-    db_session.add(user)
-    db_session.commit()
-    return f'maybe a user has been created {name}'
+class UsersQueryArgsSchema(ma.Schema):
+    name = ma.fields.String()
 
-if __name__ == "__main__":
-    create_user('test_user', 'test_login', 'test_password')
+blp = Blueprint('users', 'users', url_prefix="/users", description="Operations on pets")
+
+
+
+@blp.route("/")
+class Users_app(MethodView):
+    @blp.arguments(UsersQueryArgsSchema, location="query")
+    @blp.response(200, UsersSchema(many=True))
+    def get(self, args):
+        """List users"""
+        return Users_app.get(filters=args)
+
+api.register_blueprint(blp)
+app.run()
