@@ -4,7 +4,7 @@ import marshmallow as ma
 from flask_smorest import Api, Blueprint, abort
 from model import Users
 from db import db_session
-
+from sqlalchemy.sql import select
 
 
 
@@ -48,9 +48,12 @@ class AppUsers:
     def delete_user():
         pass
     def get_user(slef):
-        user = Users.query.first()
-        return user
-
+        s = select(Users)
+        result = db_session.execute(s)
+        #user = Users.query.first()
+        #return user
+        for _ in result:
+            print(_)
         
         
 
@@ -58,4 +61,4 @@ if __name__ == "__main__":
     #создание полозователя работает
     Vasia = AppUsers(name='Vasya', login='Vasya', password='Vasya')
     #print(Vasia.create_user())
-    #print(Vasia.get_user())
+    print(Vasia.get_user())
