@@ -49,7 +49,8 @@ class AppUsers:
         pass
     def get_user(slef):
         user = Users.query.first()
-        print(user)
+        return user
+
         
         
 
@@ -57,4 +58,4 @@ if __name__ == "__main__":
     #создание полозователя работает
     Vasia = AppUsers(name='Vasya', login='Vasya', password='Vasya')
     #print(Vasia.create_user())
-    Vasia.get_user()
+    #print(Vasia.get_user())
