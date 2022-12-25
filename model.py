@@ -11,7 +11,8 @@ class Users(Base):
     status = Column(Boolean, default=True)
 
     def __repr__(self) -> str:
-        return f' id:{self.id}, name:{self.name}, login:{self.login}, status:{self.status}'
+        return f' {self.id}, {self.name}, {self.login}, {self.password} {self.status}'
+
 
 class Secrets(Base):
     __tablename__ = "secrets"
@@ -19,18 +20,29 @@ class Secrets(Base):
     name = Column(String(170))
     user_id = Column(Integer, ForeignKey("users.id"))
     sycret_type = Column(Integer, ForeignKey("secret_type.id"))
-    status = Column(Integer)
 
     def __repr__(self) -> str:
-        return f'secrets {self.id}, {self.name}, {self.status}'
+        return f'{self.id}, {self.name}, {self.user_id}, {self.sycret_type}'
+
+# Пока незнаю на что хватит вермени.
+# Можно хранит отчеты данные пользователя в выдолбленной в маналитном SQL структуре.
+# А можно дать свободу и хранить какието обстрактные key:value словари и пусть что хочт то и хранит.
+
 
 class Secret_type(Base):
     __tablename__ = "secret_type"
     id = Column(Integer, primary_key=True)
+    name = Column(String(170))
     sycret_store_type = Column(Integer)
 
     def __repr__(self) -> str:
         return f'Secret_type {self.id}, {self.sycret_store_type}'
+
+
+# Подразумивается что могут быть отедльне разные таблицы для рахных видов данных.
+# По этому есть отедльная табличка "login_password"
+# Для логин / паролей одни, для RSA другие, для SSL X.509 третие.
+
 
 class login_password(Base):
     __tablename__ = "login_password"
@@ -43,8 +55,8 @@ class login_password(Base):
     descripton = Column(String(2048))
 
     def __repr__(self) -> str:
-        return f'login_password {self.id}, {self.login}, {self.sycret_store_type}'
-
+        return (f'{self.id}, {self.sycret_store_type}, {self.login},'
+                f'{self.password}, {self.address}, {self.create_date}, {self.descripton}')
 
 
 if __name__ == "__main__":

@@ -1,64 +1,26 @@
 from flask import Flask
-from flask.views import MethodView
-import marshmallow as ma
-from flask_smorest import Api, Blueprint, abort
-from model import Users
-from db import db_session
-from sqlalchemy.sql import select
+from flask import request
+from classes import AppUsers, AppSecert
 
 
+app = Flask(__name__)
 
 
+@app.route('/')
+def hello_world():
+    return 'palse for default content'
 
 
+@app.route("/get_uers", methods=['GET'])
+def get_user():
+    user_id = request.args.get('user_id')
+    return AppUsers.get_user(user_id)
 
 
-class AppSecert:
-    def __init__(self,id,name,user_id,sycret_type,status) -> None:
-        self.id = id
-        self.name = name
-        self.user_id = user_id
-        self.sycret_type = sycret_type
-        self.status = status
-    def write():
-        pass
-    def get():
-        pass
-    def edit():
-        pass
-
-class AppLoginPasword(AppSecert):
-    def __init__(self, id, name, user_id, sycret_type, status) -> None:
-        super().__init__(id, name, user_id, sycret_type, status)
-        
-    pass
+@app.route("/get_secret", methods=['GET'])
+def get_secret():
+    secret_id = request.args.get('secret_id')
+    return AppSecert.get_secrt(secret_id)
 
 
-class AppUsers:
-    def __init__(self, name,login,password,status=1) -> None:
-        self.name = name
-        self.login = login
-        self.password = password
-        self.status = status
-    def create_user(self):
-        user = Users(name=self.name, login=self.login, password=self.password)
-        db_session.add(user)
-        db_session.commit()
-        return user.id
-    def delete_user():
-        pass
-    def get_user(slef):
-        s = select(Users)
-        result = db_session.execute(s)
-        #user = Users.query.first()
-        #return user
-        for _ in result:
-            print(_)
-        
-        
-
-if __name__ == "__main__":
-    #создание полозователя работает
-    Vasia = AppUsers(name='Vasya', login='Vasya', password='Vasya')
-    #print(Vasia.create_user())
-    print(Vasia.get_user())
+app.run(debug=True)
