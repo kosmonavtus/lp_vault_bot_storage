@@ -2,13 +2,13 @@ from db_model import Users, Secrets
 from db import db_session
 
 
-class AppSecert:
+class AppSecret:
     def __init__(self, name: str, user_id: int, sycret_type: int) -> None:
         self.name = name
         self.user_id = user_id
         self.sycret_type = sycret_type
 
-    def create_secert(self):
+    def create_secret(self):
         secret = Secrets(
                         name=self.name,
                         user_id=self.user_id,
@@ -19,7 +19,7 @@ class AppSecert:
         return secret.id
 
     @classmethod
-    def get_secrt(self, secret_id: int) -> str:
+    def get_secret(self, secret_id: int) -> str:
         q_result = Secrets.query.filter(Secrets.id == secret_id)
         for _ in q_result:
             return f'{_}'
