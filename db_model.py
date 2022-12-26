@@ -29,7 +29,7 @@ class Secrets(Base):
 # А можно дать свободу и хранить какието обстрактные key:value словари и пусть что хочт то и хранит.
 
 
-class Secret_type(Base):
+class SecretType(Base):
     __tablename__ = "secret_type"
     id = Column(Integer, primary_key=True)
     name = Column(String(170))

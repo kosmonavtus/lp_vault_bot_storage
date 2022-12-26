@@ -1,4 +1,4 @@
-from model import Users, Secrets
+from db_model import Users, Secrets
 from db import db_session
 
 
@@ -54,8 +54,3 @@ class AppUsers:
     def delete_user(self):
         pass
 
-
-if __name__ == "__main__":
-    # print(AppUsers.get_user(10))
-    # print(AppSecert.get_secrt(10))
-    pass
