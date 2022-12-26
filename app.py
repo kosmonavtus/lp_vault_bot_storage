@@ -6,13 +6,12 @@ from classes import AppUsers, AppSecret
 app = Flask(__name__)
 
 
-@app.route("/uers", methods=['GET'])
+@app.route("/users", methods=['GET'])
 def get_user():
-    try:
         user_id = request.args.get('user_id')
-        return AppUsers.get_user(user_id)
-    except (ValueError, TypeError):
-        return f'prequired parameter is user id'
+        result = AppUsers.get_user(user_id)
+        return result
+    # AppUsers.get_user(user_id)
 
 @app.route("/secret", methods=['GET'])
 def get_secret():
