@@ -6,8 +6,6 @@ from classes import AppUsers, AppSecert
 app = Flask(__name__)
 
 
-
-
 @app.route("/uers", methods=['GET'])
 def get_user():
     user_id = request.args.get('user_id')
