@@ -47,10 +47,27 @@ class AppUsers:
 
     @classmethod
     def get_user(slef, user_id: int) -> str:
-        q_result = Users.query.filter(Users.id == user_id)
-        for _ in q_result:
-            return f'{_}'
+        try:
+            q_result = Users.query.filter(Users.id == user_id)
+            # не понимаю как получить результат без for _ 
+            # если возвращать q_result то возвращается запрос.
+            for _ in q_result:
+                return f'{_}'
+        except:
+            # не понимаю каой тип исключения тут прилетает и как перехватывать именно гего?
+            return False
+            # А можно вызывать самому Rise TypeError вместо return False?
+            # Или нужно возвращать фалс ? 
+
+            
 
     def delete_user(self):
         pass
 
+if __name__ == "__main__":
+    # Как так выходит если делать два принта подряд 
+    # Один с кривым парметром другой с правильным
+    # то оба возвращают False ? 
+    # Они както в одну транзацию в лезают оба?
+    print(AppUsers.get_user('asdasdas'))
+    print(AppUsers.get_user(10))
