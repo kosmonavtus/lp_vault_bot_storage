@@ -51,8 +51,9 @@ class AppUsers:
             q_result = Users.query.filter(Users.id == user_id)
             # не понимаю как получить результат без for _ 
             # если возвращать q_result то возвращается запрос.
-            for _ in q_result:
-                return f'{_}'
+            #for _ in q_result:
+            #    return f'{_}'
+            return q_result.all()
         except:
             # не понимаю каой тип исключения тут прилетает и как перехватывать именно гего?
             return False
@@ -69,5 +70,5 @@ if __name__ == "__main__":
     # Один с кривым парметром другой с правильным
     # то оба возвращают False ? 
     # Они както в одну транзацию в лезают оба?
-    print(AppUsers.get_user('asdasdas'))
+    #print(AppUsers.get_user('asdasdas'))
     print(AppUsers.get_user(10))
