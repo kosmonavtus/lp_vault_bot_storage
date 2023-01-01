@@ -1,3 +1,4 @@
+import toml
 from flask import Flask
 from flask import request
 from app.classes import AppUsers, AppSecret
@@ -5,7 +6,7 @@ from werkzeug.exceptions import BadRequestKeyError
 
 def create_app():
     app = Flask(__name__)
-
+    app.config.from_file("config.toml", load=toml.load)
 
     @app.route("/user", methods=['GET'])
     def user():
