@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from classes import AppUsers, AppSecret
+from werkzeug.exceptions import BadRequestKeyError
 
 
 app = Flask(__name__)
@@ -8,13 +9,15 @@ app = Flask(__name__)
 
 @app.route("/user", methods=['GET'])
 def user():
-    if request.args['user_id'].isdigit():
-        user_id = int(request.args['user_id'])
-        if isinstance(user_id, int):
-            return AppUsers.get_user(user_id)
+    try:
+        if request.args['user_id'].isdigit():
+            user_id = int(request.args['user_id'])
+            return str(AppUsers.get_user(user_id))
         else:
             return f'Parameter error {user_id}'
-    else: f' user_id type is not int'
+    except (BadRequestKeyError):
+        return f'user_id parameter was not received'
+
 
 
 
