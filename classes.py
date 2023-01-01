@@ -58,6 +58,8 @@ class AppUsers:
             return f'incorrect parameter user_id: {user_id}'
         except (exc.InternalError):
             return f'I dont understand why, but this sqlalchemy.exc.InternalError'
+        except exc.TimeoutError:
+            return f'looks like your database ran away'
         except:
             return f'something else broke'
 
