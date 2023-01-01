@@ -16,7 +16,7 @@ def users():
 
 
 @app.route("/secret", methods=['GET'])
-def get_secret():  
+def get_secret():
     secret_id = request.args.get('secret_id')
     if isinstance(secret_id, int):
         return AppSecret.get_secret(secret_id)
