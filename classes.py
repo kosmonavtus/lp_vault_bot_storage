@@ -70,5 +70,5 @@ if __name__ == "__main__":
     # Один с кривым парметром другой с правильным
     # то оба возвращают False ? 
     # Они както в одну транзацию в лезают оба?
-    #print(AppUsers.get_user('asdasdas'))
+    #   print(AppUsers.get_user('asdasdas'))
     print(AppUsers.get_user(10))
