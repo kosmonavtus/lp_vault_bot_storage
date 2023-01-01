@@ -1,8 +1,9 @@
-import toml
 from flask import Flask
 from flask import request
 from app.classes import AppUsers, AppSecret
 from werkzeug.exceptions import BadRequestKeyError
+import toml
+
 
 def create_app():
     app = Flask(__name__)
@@ -39,6 +40,6 @@ def create_app():
 
     return app
 
-create_app()
+
 
 #  return AppUsers.get_user(request.args.get('user_id'))
