@@ -64,8 +64,8 @@ class AppUsers:
         try:
             q_result = Users.query.filter(Users.id == user_id)
             print(type(q_result.all()))
-            #return q_result.all()
-            return 'i am work!'
+            return q_result.all()
+            #return 'i am work!'
         except (exc.DataError):
             return f'incorrect parameter user_id: {user_id}'
         except (exc.InternalError):
