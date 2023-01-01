@@ -10,8 +10,9 @@ class Users(Base):
     password = Column(String(170))
     status = Column(Boolean, default=True)
 
-    def __repr__(self) -> str:
-        return f' {self.id}, {self.name}, {self.login}, {self.password} {self.status}'
+    def __repr__(self) -> dict:
+        return f' {self.id}, {self.name}, {self.login}, {self.password}, {self.status}'
+        #return dict({'user_id':self.id, 'user_name':self.name, 'user_login':self.login, 'user_password':self.password,'user_status':self.status})
 
 
 class Secrets(Base):

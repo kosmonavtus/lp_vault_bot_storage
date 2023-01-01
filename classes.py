@@ -63,7 +63,9 @@ class AppUsers:
     def get_user(cls, user_id: int) -> str:
         try:
             q_result = Users.query.filter(Users.id == user_id)
-            return q_result.all()
+            print(type(q_result.all()))
+            #return q_result.all()
+            return 'i am work!'
         except (exc.DataError):
             return f'incorrect parameter user_id: {user_id}'
         except (exc.InternalError):
@@ -81,9 +83,9 @@ class AppUsers:
 
 if __name__ == "__main__":
     print((AppUsers.get_user(19)))
-    print((AppUsers.get_user(20)))
-    print((AppUsers.get_user('asdasdas')))
-    print((AppUsers.get_user(21)))
+    #print((AppUsers.get_user(20)))
+    #print((AppUsers.get_user('asdasdas')))
+    #print((AppUsers.get_user(21)))
     # Разобрался с перехватом исключений от алхимии вроде бы.
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
