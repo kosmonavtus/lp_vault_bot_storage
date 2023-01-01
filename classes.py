@@ -5,7 +5,6 @@ from db import db_session
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
 from sqlalchemy import exc
 
-
 class AppSecret:
     def __init__(self, name: str, user_id: int, sycret_type: int) -> None:
         self.name = name
@@ -24,9 +23,20 @@ class AppSecret:
 
     @classmethod
     def get_secret(self, secret_id: int) -> str:
-        q_result = Secrets.query.filter(Secrets.id == secret_id)
-        for _ in q_result:
-            return f'{_}'
+        try:
+            q_result = Secrets.query.filter(Secrets.id == secret_id)
+            return q_result.all()
+        except (exc.DataError):
+            return f'incorrect parameter secret_id: {secret_id}'
+        except (exc.InternalError):
+            return f'I dont understand why, but this sqlalchemy.exc.InternalError'
+        except (exc.TimeoutError):
+            return f'looks like your database ran away'
+        except:
+            return f'something else broke'
+        # Вот этот код про обработку экспешенов дублируется.
+        # Как то можно это во что то "завернуть" чтобы не дублировать? 
+
 
     def delete_secret():
         pass
@@ -58,7 +68,7 @@ class AppUsers:
             return f'incorrect parameter user_id: {user_id}'
         except (exc.InternalError):
             return f'I dont understand why, but this sqlalchemy.exc.InternalError'
-        except exc.TimeoutError:
+        except (exc.TimeoutError):
             return f'looks like your database ran away'
         except:
             return f'something else broke'
@@ -70,10 +80,11 @@ class AppUsers:
         pass
 
 if __name__ == "__main__":
-
     print((AppUsers.get_user(19)))
     print((AppUsers.get_user(20)))
     print((AppUsers.get_user('asdasdas')))
     print((AppUsers.get_user(21)))
     # Разобрался с перехватом исключений от алхимии вроде бы.
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
+    # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
+    # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.

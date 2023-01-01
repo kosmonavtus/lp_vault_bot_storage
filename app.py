@@ -6,8 +6,8 @@ from classes import AppUsers, AppSecret
 app = Flask(__name__)
 
 
-@app.route("/users", methods=['GET'])
-def users():
+@app.route("/user", methods=['GET'])
+def get_user():
     user_id = request.args.get('user_id')
     if isinstance(user_id, int):
         return AppUsers.get_user(user_id)
@@ -22,6 +22,10 @@ def get_secret():
         return AppSecret.get_secret(secret_id)
     else:
         return f'Parameter error'
+
+@app.route("/add_user", methods=['POST'])
+def add_user():
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True)
