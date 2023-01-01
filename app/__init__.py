@@ -7,10 +7,11 @@ import toml
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_file("config.toml", load=toml.load)
+    app.config.from_file("./config.toml", load=toml.load)
 
     @app.route("/user", methods=['GET'])
     def user():
+        print(app.config)
         try:
             if request.args['user_id'].isdigit():
                 user_id = int(request.args['user_id'])
@@ -37,9 +38,9 @@ def create_app():
     def add_user():
         pass
 
-
     return app
 
-
-
-#  return AppUsers.get_user(request.args.get('user_id'))
+if __name__ == "__main__":
+    create_app(debug=True)
+# а почему оно отсюда вот таким образом больше не запускается ? 
+# Только из корня flask  --debug run
