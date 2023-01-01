@@ -1,5 +1,9 @@
 from db_model import Users, Secrets
 from db import db_session
+# Методом науного тыка нашел что exc - это исключения, 
+# Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
+# Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
+from sqlalchemy import exc
 
 
 class AppSecret:
@@ -46,19 +50,17 @@ class AppUsers:
         return user.id
 
     @classmethod
-    def get_user(slef, user_id: int) -> str:
+    def get_user(cls, user_id: int) -> str:
         try:
             q_result = Users.query.filter(Users.id == user_id)
-            # не понимаю как получить результат без for _ 
-            # если возвращать q_result то возвращается запрос.
-            #for _ in q_result:
-            #    return f'{_}'
             return q_result.all()
+        except (exc.DataError):
+            return f'incorrect parameter user_id: {user_id}'
+        except (exc.InternalError):
+            return f'I dont understand why, but this sqlalchemy.exc.InternalError'
         except:
-            # не понимаю каой тип исключения тут прилетает и как перехватывать именно гего?
-            return False
-            # А можно вызывать самому Rise TypeError вместо return False?
-            # Или нужно возвращать фалс ? 
+            return f'something else broke'
+
 
             
 
@@ -66,9 +68,10 @@ class AppUsers:
         pass
 
 if __name__ == "__main__":
-    # Как так выходит если делать два принта подряд 
-    # Один с кривым парметром другой с правильным
-    # то оба возвращают False ? 
-    # Они както в одну транзацию в лезают оба?
-    #   print(AppUsers.get_user('asdasdas'))
-    print(AppUsers.get_user(10))
+
+    print((AppUsers.get_user(19)))
+    print((AppUsers.get_user(20)))
+    print((AppUsers.get_user('asdasdas')))
+    print((AppUsers.get_user(21)))
+    # Разобрался с перехватом исключений от алхимии вроде бы.
+    # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
