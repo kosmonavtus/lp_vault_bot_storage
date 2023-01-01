@@ -1,7 +1,7 @@
 from faker import Faker
 import random
 import string
-from classes import AppUsers, AppSecert
+from app.classes import AppUsers, AppSecert
 
 fake = Faker()
 

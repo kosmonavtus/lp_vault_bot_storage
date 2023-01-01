@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from classes import AppUsers, AppSecret
+from app.classes import AppUsers, AppSecret
 from werkzeug.exceptions import BadRequestKeyError
 
 def create_app():
@@ -37,5 +37,7 @@ def create_app():
 
 
     return app
+
+create_app()
 
 #  return AppUsers.get_user(request.args.get('user_id'))
