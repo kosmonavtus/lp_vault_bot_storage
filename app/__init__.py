@@ -36,11 +36,15 @@ def create_app():
 
     @app.route("/add_user", methods=['POST'])
     def add_user():
-        pass
+        try: 
+            request_data = request.args
+            return request_data
+        except (BadRequestKeyError):
+            return f'{request.args} parameter was not received'
 
     return app
 
 if __name__ == "__main__":
     create_app(debug=True)
 # а почему оно отсюда вот таким образом больше не запускается ? 
-# Только из корня flask  --debug run
+# Только из корня 
