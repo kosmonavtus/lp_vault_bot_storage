@@ -45,6 +45,7 @@ def create_app():
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'
 
+
     @app.route("/add_secret", methods=['POST'])
     def add_secret():
         try:
@@ -53,6 +54,18 @@ def create_app():
             #  А еще бы наверное хорошо проверять самому приложениею что userid в базе существует а не базу мучать.
             secret = AppSecret(name=request_data['name'], user_id=request_data['user_id'], sycret_type=request_data['sycret_type'])
             secret.create_secret()
+        except (BadRequestKeyError):
+            return f'{request.get_data} parameter was not received'
+
+# хочу удаляьт пользователей по ID или Name из базы так и не понял как это сделать.
+    @app.route("/delete_user", methods=['POST'])
+    def del_user():
+        try:
+            request_data = request.get_json()
+            user_id_int = int(request_data['user_id'])
+            print(user_id_int)
+            result = AppUsers.delete_user()
+            return str(result)
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'
 

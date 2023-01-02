@@ -3,7 +3,8 @@ from .db import db_session
 # Методом науного тыка нашел что exc - это исключения в sqlalchemy, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
-from sqlalchemy import exc
+from sqlalchemy import exc, delete, Table, Column, Integer, String
+
 
 class AppSecret:
     def __init__(self, name: str, user_id: int, sycret_type: int) -> None:
@@ -98,9 +99,15 @@ class AppUsers:
         except Exception as e:
             return(e)
 
-
+    @classmethod
     def delete_user(self):
-        pass
+        try:
+            return False
+        except Exception as e:
+            print(type(e))
+            print(e)
+            return(e)
+        
 
 if __name__ == "__main__":
     #print((AppUsers.get_user(19)))
