@@ -26,7 +26,7 @@ class AppSecret:
             return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
             return(e)
-        return secret.id
+        return True
 
     @classmethod
     def get_secret(self, secret_id: int) -> str:
@@ -39,6 +39,8 @@ class AppSecret:
             return f'I dont understand why, but this sqlalchemy.exc.InternalError'
         except (exc.TimeoutError):
             return f'looks like your database ran away'
+        except (exc.OperationalError):
+            return f'Is the server running on that host and accepting TCP/IP connections?'
         except:
             return f'something else broke'
         # Вот этот код про обработку экспешенов дублируется.
@@ -71,7 +73,7 @@ class AppUsers:
             return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
             return(e)
-        return user.id
+        return True
         #  Я вовзвращю строчки с описаниями потому что тупой и мне так проще отладить.
         #  Но Сдравый смысл мне подсказывает что что то тут не так.
         #  Не до конца понимаю что тут надо возвращать назад что бы программа себя "адекватно" вела.
@@ -87,6 +89,8 @@ class AppUsers:
             return f'I dont understand why, but this sqlalchemy.exc.InternalError'
         except (exc.TimeoutError):
             return f'looks like your database ran away'
+        except (exc.OperationalError):
+            return f'Is the server running on that host and accepting TCP/IP connections?'
         except:
             return f'something else broke'
 
@@ -103,5 +107,5 @@ if __name__ == "__main__":
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
     # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.
-    user = AppUsers(name='Test_name', login='Test_login', password='test_password')
-    user.create_user()
+    user = AppUsers(name='Test_name', login=123, password='test_password')
+    print(user.create_user())
