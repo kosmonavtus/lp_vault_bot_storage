@@ -45,6 +45,15 @@ def create_app():
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'
 
+    @app.route("/add_secret", methods=['POST'])
+    def add_secret():
+        try:
+            request_data = request.get_json()
+            secret = AppSecret(name=request_data['name'], user_id=request_data['user_id'], sycret_type=request_data['sycret_type'])
+            secret.create_secret()
+        except (BadRequestKeyError):
+            return f'{request.get_data} parameter was not received'
+
     return app
 
 if __name__ == "__main__":
