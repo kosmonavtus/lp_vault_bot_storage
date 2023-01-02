@@ -3,7 +3,7 @@ from .db import db_session
 # Методом науного тыка нашел что exc - это исключения в sqlalchemy, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
-from sqlalchemy import exc, delete, Table, Column, Integer, String
+from sqlalchemy import exc
 
 
 class AppSecret:
