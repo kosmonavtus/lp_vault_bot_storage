@@ -21,12 +21,13 @@ class AppSecret:
             db_session.add(secret)
             db_session.commit()
         except (exc.IntegrityError):
-            return f'Key {self.name} already exists'
+            return f'Tried made insert with wrong data {secret}'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
             return(e)
         return True
+
 
     @classmethod
     def get_secret(self, secret_id: int) -> str:
@@ -41,8 +42,8 @@ class AppSecret:
             return f'looks like your database ran away'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
-        except:
-            return f'something else broke'
+        except Exception as e:
+            return(e)
         # Вот этот код про обработку экспешенов дублируется.
         # Как то можно это во что то "завернуть" чтобы не дублировать? 
 
@@ -68,7 +69,7 @@ class AppUsers:
             db_session.add(user)
             db_session.commit()
         except (exc.IntegrityError):
-            return f'Key {self.login} already exists'
+            return f'Tried made insert with wrong data {user}'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
@@ -91,8 +92,8 @@ class AppUsers:
             return f'looks like your database ran away'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
-        except:
-            return f'something else broke'
+        except Exception as e:
+            return(e)
 
 
     def delete_user(self):
@@ -107,5 +108,9 @@ if __name__ == "__main__":
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
     # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.
-    user = AppUsers(name='Test_name', login=123, password='test_password')
-    print(user.create_user())
+    
+    #user = AppUsers(name='Test_name', login=123, password='test_password')
+    #print(user.create_user())
+
+    secret = AppSecret(name='TEST_SECRET', user_id=10, sycret_type=10)
+    print(secret.create_secret())
