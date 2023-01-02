@@ -1,6 +1,6 @@
 from db_model import Users, Secrets
 from db import db_session
-# Методом науного тыка нашел что exc - это исключения, 
+# Методом науного тыка нашел что exc - это исключения в sqlalchemy, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
 from sqlalchemy import exc
@@ -34,6 +34,8 @@ class AppSecret:
         try:
             q_result = Secrets.query.filter(Secrets.id == secret_id)
             return q_result.all()
+            # Тут навернео не плохо было бы возврашать обьект и дальше с ним разбираться в других функциях.
+            # А а не тупо строку сразу.
         except (exc.DataError):
             return f'incorrect parameter secret_id: {secret_id}'
         except (exc.InternalError):
@@ -45,7 +47,8 @@ class AppSecret:
         except Exception as e:
             return(e)
         # Вот этот код про обработку экспешенов дублируется.
-        # Как то можно это во что то "завернуть" чтобы не дублировать? 
+        # Как то можно это во что то "завернуть" чтобы не дублировать?
+
 
 
     def delete_secret():
