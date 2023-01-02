@@ -21,7 +21,7 @@ class AppSecret:
             db_session.add(secret)
             db_session.commit()
         except (exc.IntegrityError):
-            return f'Key {secret} already exists'
+            return f'Key {self.name} already exists'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
@@ -80,9 +80,7 @@ class AppUsers:
     def get_user(cls, user_id: int) -> str:
         try:
             q_result = Users.query.filter(Users.id == user_id)
-            print(q_result.all())
             return q_result.all()
-            #return 'i am work!'
         except (exc.DataError):
             return f'incorrect parameter user_id: {user_id}'
         except (exc.InternalError):
