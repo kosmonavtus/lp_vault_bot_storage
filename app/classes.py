@@ -1,5 +1,5 @@
-from db_model import Users, Secrets
-from db import db_session
+from .db_model import Users, Secrets
+from .db import db_session
 # Методом науного тыка нашел что exc - это исключения, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
