@@ -100,9 +100,13 @@ class AppUsers:
             return(e)
 
     @classmethod
-    def delete_user(self):
+    def delete_user(self, user_id):
         try:
-            return False
+            # Хочу удолть пользователя не делая перед этим зарпоса в базу, не понимаю как это сделать.
+            user_for_delete = db_session.get(Users, user_id)
+            db_session.delete(user_for_delete)
+            db_session.commit()
+            return True
         except Exception as e:
             print(type(e))
             print(e)

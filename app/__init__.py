@@ -64,7 +64,7 @@ def create_app():
             request_data = request.get_json()
             user_id_int = int(request_data['user_id'])
             print(user_id_int)
-            result = AppUsers.delete_user()
+            result = AppUsers.delete_user(user_id_int)
             return str(result)
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'
