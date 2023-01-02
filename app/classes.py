@@ -20,9 +20,12 @@ class AppSecret:
         try:
             db_session.add(secret)
             db_session.commit()
+        except (exc.IntegrityError):
+            return f'Key {secret} already exists'
+        except (exc.OperationalError):
+            return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
-            print(e)
-
+            return(e)
         return secret.id
 
     @classmethod
@@ -62,11 +65,17 @@ class AppUsers:
         try:
             db_session.add(user)
             db_session.commit()
+        except (exc.IntegrityError):
+            return f'Key {self.login} already exists'
+        except (exc.OperationalError):
+            return f'Is the server running on that host and accepting TCP/IP connections?'
         except Exception as e:
-            print(e)
-
+            return(e)
         return user.id
-
+        #  Я вовзвращю строчки с описаниями потому что тупой и мне так проще отладить.
+        #  Но Сдравый смысл мне подсказывает что что то тут не так.
+        #  Не до конца понимаю что тут надо возвращать назад что бы программа себя "адекватно" вела.
+        #  А не "взрывавалась" в случае ошибки.
     @classmethod
     def get_user(cls, user_id: int) -> str:
         try:
