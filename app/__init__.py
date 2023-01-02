@@ -1,3 +1,4 @@
+import json
 from flask import Flask
 from flask import request
 from app.classes import AppUsers, AppSecret
@@ -37,14 +38,16 @@ def create_app():
     @app.route("/add_user", methods=['POST'])
     def add_user():
         try: 
-            request_data = request.args
-            return request_data
+            request_data = request.get_json()
+            user = AppUsers(name=request_data['name'], login=request_data['login'], password=request_data['password'])
+            result_user_create = user.create_user()
+            return str(result_user_create)
         except (BadRequestKeyError):
-            return f'{request.args} parameter was not received'
+            return f'{request.get_data} parameter was not received'
 
     return app
 
 if __name__ == "__main__":
     create_app(debug=True)
-# а почему оно отсюда вот таким образом больше не запускается ? 
-# Только из корня 
+
+# Только из корня flask  --debug run
