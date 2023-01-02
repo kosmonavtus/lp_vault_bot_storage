@@ -51,7 +51,6 @@ class AppSecret:
         # Как то можно это во что то "завернуть" чтобы не дублировать?
 
 
-
     def delete_secret(self, secret_id):
         try:
             user_for_delete = db_session.get(Secrets, secret_id)
@@ -105,6 +104,7 @@ class AppUsers:
         except Exception as e:
             return(e)
 
+
     @classmethod
     def delete_user(self, user_id):
         try:
@@ -118,17 +118,11 @@ class AppUsers:
         
 
 if __name__ == "__main__":
-    #print((AppUsers.get_user(19)))
-    #print((AppUsers.get_user(20)))
-    #print((AppUsers.get_user('asdasdas')))
-    #print((AppUsers.get_user(21)))
+    print((AppUsers.get_user(19)))
+    print((AppUsers.get_user(20)))
+    print((AppUsers.get_user('asdasdas')))
+    print((AppUsers.get_user(21)))
     # Разобрался с перехватом исключений от алхимии вроде бы.
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
     # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.
-    
-    #user = AppUsers(name='Test_name', login=123, password='test_password')
-    #print(user.create_user())
-
-    secret = AppSecret(name='TEST_SECRET', user_id=10, sycret_type=10)
-    print(secret.create_secret())
