@@ -63,8 +63,17 @@ def create_app():
         try:
             request_data = request.get_json()
             user_id_int = int(request_data['user_id'])
-            print(user_id_int)
             result = AppUsers.delete_user(user_id_int)
+            return str(result)
+        except (BadRequestKeyError):
+            return f'{request.get_data} parameter was not received'
+
+    @app.route("/delete_secret", methods=['POST'])
+    def del_secret():
+        try:
+            request_data = request.get_json()
+            secret_id_int = int(request_data['secret_id'])
+            result = AppUsers.delete_user(secret_id_int)
             return str(result)
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'

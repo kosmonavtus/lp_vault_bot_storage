@@ -52,8 +52,14 @@ class AppSecret:
 
 
 
-    def delete_secret():
-        pass
+    def delete_secret(self, secret_id):
+        try:
+            user_for_delete = db_session.get(Secrets, secret_id)
+            db_session.delete(user_for_delete)
+            db_session.commit()
+            return True
+        except Exception as e:
+            return(e)
 
 
 class AppUsers:
@@ -108,8 +114,6 @@ class AppUsers:
             db_session.commit()
             return True
         except Exception as e:
-            print(type(e))
-            print(e)
             return(e)
         
 
