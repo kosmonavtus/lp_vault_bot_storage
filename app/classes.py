@@ -1,5 +1,5 @@
-from app.db_model import Users, Secrets
-from app.db import db_session
+from db_model import Users, Secrets
+from db import db_session
 # Методом науного тыка нашел что exc - это исключения, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
@@ -17,8 +17,12 @@ class AppSecret:
                         user_id=self.user_id,
                         sycret_type=self.sycret_type,
                         )
-        db_session.add(secret)
-        db_session.commit()
+        try:
+            db_session.add(secret)
+            db_session.commit()
+        except Exception as e:
+            print(e)
+
         return secret.id
 
     @classmethod
@@ -55,8 +59,12 @@ class AppUsers:
                     login=self.login,
                     password=self.password
                     )
-        db_session.add(user)
-        db_session.commit()
+        try:
+            db_session.add(user)
+            db_session.commit()
+        except Exception as e:
+            print(e)
+
         return user.id
 
     @classmethod
@@ -76,17 +84,17 @@ class AppUsers:
             return f'something else broke'
 
 
-            
-
     def delete_user(self):
         pass
 
 if __name__ == "__main__":
-    print((AppUsers.get_user(19)))
-    print((AppUsers.get_user(20)))
-    print((AppUsers.get_user('asdasdas')))
-    print((AppUsers.get_user(21)))
+    #print((AppUsers.get_user(19)))
+    #print((AppUsers.get_user(20)))
+    #print((AppUsers.get_user('asdasdas')))
+    #print((AppUsers.get_user(21)))
     # Разобрался с перехватом исключений от алхимии вроде бы.
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
     # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.
+    user = AppUsers(name='Test_name', login='Test_login', password='test_password')
+    user.create_user()
