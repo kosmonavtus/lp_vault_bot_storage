@@ -49,6 +49,7 @@ def create_app():
     def add_secret():
         try:
             request_data = request.get_json()
+            #  Тут бы хорошо проверить тайпдиктом что пришло то что нужно на вход
             secret = AppSecret(name=request_data['name'], user_id=request_data['user_id'], sycret_type=request_data['sycret_type'])
             secret.create_secret()
         except (BadRequestKeyError):
