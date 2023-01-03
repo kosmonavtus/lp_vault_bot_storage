@@ -1,10 +1,8 @@
 from app.secret.models import Secrets
 from app.user.models import Users
 from app.db import db_session
-# Методом науного тыка нашел что exc - это исключения в sqlalchemy, 
-# Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
-# Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
-from sqlalchemy import exc
+from sqlalchemy import exc, orm
+from sqlalchemy import delete
 
 
 class AppSecret:
@@ -32,12 +30,10 @@ class AppSecret:
 
 
     @classmethod
-    def get_secret(self, secret_id: int) -> str:
+    def get_secret(self, secret_id: int) -> orm.query.Query:
         try:
             q_result = Secrets.query.filter(Secrets.id == secret_id)
-            return str(q_result.all())
-            # Тут навернео не плохо было бы возврашать обьект и дальше с ним разбираться в других функциях.
-            # А а не тупо строку сразу.
+            return q_result
         except (exc.DataError):
             return f'incorrect parameter secret_id: {secret_id}'
         except (exc.InternalError):
@@ -46,10 +42,8 @@ class AppSecret:
             return f'looks like your database ran away'
         except (exc.OperationalError):
             return f'Is the server running on that host and accepting TCP/IP connections?'
-        except Exception as e:
-            return(e)
-        # Вот этот код про обработку экспешенов дублируется.
-        # Как то можно это во что то "завернуть" чтобы не дублировать?
+        except:
+            return False
 
     @classmethod
     def delete_secret(self, secret_id: int):
@@ -107,18 +101,14 @@ class AppUsers:
 
 
     @classmethod
-    def delete_user(self, user_id):
+    def delete_user(self, user_id: int)-> bool:
         try:
-            # Хочу удолть пользователя не делая перед этим SELECT в базу, не понимаю как это сделать.
-            # Пошел разбиратьс как так сделать, провалился в АД из документации к SQLAlchemy.
-            # Нашел способ - не использоваться ORM.
-            # А както с ORM но без лишнго селекта в базу можно?
             user_for_delete = db_session.get(Users, user_id)
             db_session.delete(user_for_delete)
             db_session.commit()
             return True
-        except Exception as e:
-            return(e)
+        except:
+            return False
         
 
 if __name__ == "__main__":

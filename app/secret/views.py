@@ -10,7 +10,8 @@ def secret():
     try:
         secret_id = request.args.get('secret_id')
         if secret_id.isdigit():
-            return AppSecret.get_secret(secret_id)
+            query_obj = AppSecret.get_secret(secret_id)
+            return str(query_obj.all())
         else:
             return f'Error {secret_id} parametr not int'
     except (BadRequestKeyError):
