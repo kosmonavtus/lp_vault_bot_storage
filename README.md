@@ -12,14 +12,15 @@
 Устанавливаем зависимости.
 ```
 pip install -r requirements
+```
 
-В конфиге нужно заполнить coneections string для подключения к БД.
+В конфиге задаем значение переменной CONNECTION_STRING для подключения к БД.
 ```
 CONNECTION_STRING = "CONNECTION_YOUR_STRING_VALUE"
 ./app/config.toml
+```
 
-
-Инициализируем базу отсюда,
+Инициализируем базу отсюда.
 Прото так она не инитнится, это надо переделать.
 ```
 app/db_model.py
