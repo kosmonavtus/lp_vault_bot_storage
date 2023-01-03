@@ -1,10 +1,11 @@
-from app.db import Base
+#from app.db import Base
 from flask import Flask
-from flask import request
-from app.classes import AppUsers, AppSecret
-from werkzeug.exceptions import BadRequestKeyError
+#from flask import request
+#from app.classes import AppUsers, AppSecret
+#from werkzeug.exceptions import BadRequestKeyError
 import toml
-
+from app.user.views import blueprint as user_blueprint
+from app.secret.views import blueprint as sec_blueprint
 
 def create_app():
     app = Flask(__name__)
@@ -13,74 +14,8 @@ def create_app():
     # Тут должен быть инит базы.
     # Не понял как инитнуть базу из апп.
     #
-
-    @app.route("/user", methods=['GET'])
-    def user():
-        try:
-            if request.args['user_id'].isdigit():
-                user_id = int(request.args['user_id'])
-                return str(AppUsers.get_user(user_id))
-            else:
-                return f'Error {user_id} parametr not int'
-        except (BadRequestKeyError):
-            return f'user_id parameter was not received'
-
-
-    @app.route("/secret", methods=['GET'])
-    def secret():
-        try:
-            secret_id = request.args.get('secret_id')
-            if isinstance(secret_id, int):
-                return AppSecret.get_secret(secret_id)
-            else:
-                return f'Error {secret_id} parametr not int'
-        except (BadRequestKeyError):
-            return f'secret_id parameter was not received'
-
-
-    @app.route("/add_user", methods=['POST'])
-    def add_user():
-        try: 
-            request_data = request.get_json()
-            user = AppUsers(name=request_data['name'], login=request_data['login'], password=request_data['password'])
-            result_user_create = user.create_user()
-            return str(result_user_create)
-        except (BadRequestKeyError):
-            return f'{request.get_data} parameter was not received'
-
-
-    @app.route("/add_secret", methods=['POST'])
-    def add_secret():
-        try:
-            request_data = request.get_json()
-            #  Тут бы хорошо проверить тайпдиктом что пришло то что нужно на вход
-            #  А еще бы наверное хорошо проверять самому приложениею что userid в базе существует а не базу мучать.
-            secret = AppSecret(name=request_data['name'], user_id=request_data['user_id'], sycret_type=request_data['sycret_type'])
-            secret.create_secret()
-        except (BadRequestKeyError):
-            return f'{request.get_data} parameter was not received'
-
-    # выглядит как какойто пиздец.
-    @app.route("/delete_user", methods=['POST'])
-    def del_user():
-        try:
-            request_data = request.get_json()
-            user_id_int = int(request_data['user_id'])
-            result = AppUsers.delete_user(user_id_int)
-            return str(result)
-        except (BadRequestKeyError):
-            return f'{request.get_data} parameter was not received'
-
-    @app.route("/delete_secret", methods=['POST'])
-    def del_secret():
-        try:
-            request_data = request.get_json()
-            secret_id_int = int(request_data['secret_id'])
-            result = AppUsers.delete_user(secret_id_int)
-            return str(result)
-        except (BadRequestKeyError):
-            return f'{request.get_data} parameter was not received'
-
+    app.register_blueprint(user_blueprint)
+    app.register_blueprint(sec_blueprint)
     return app
 
 if __name__ == "__main__":

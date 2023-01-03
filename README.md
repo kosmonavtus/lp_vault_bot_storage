@@ -30,3 +30,37 @@ app/db_model.py
 ```
 flask  --debug run
 ```
+
+### Как жиьт когда у тебя, ну такое себе API?
+
+Получить пользователя по ID:
+```
+curl -X GET  http://127.0.0.1:5000/users/user?user_id=10
+```
+
+Добавить нового пользователя:
+```
+curl -X POST -d '{"name": "test_views", "login":"test_views_login", "password":"test_create_user_password"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/users/add_user
+```
+
+Удалить пользователя:
+```
+curl -X POST -d '{"user_id": "71"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/users/delete_user
+```
+
+Получить "секрет" по ID:
+```
+curl -X GET  http://127.0.0.1:5000/sec/secret?secret_id=10
+```
+
+Добавить секрет:
+```
+curl -X POST -d '{"name": "secret_name", "user_id": "72", "secret_type": "1"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/sec/add_secret
+```
+
+Удалить секрерт по ID секрета:
+```
+curl -X POST -d '{"secret_id": "58"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/sec/delete_secret
+
+```
+

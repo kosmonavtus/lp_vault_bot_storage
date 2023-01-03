@@ -1,5 +1,6 @@
-from .db_model import Users, Secrets
-from .db import db_session
+from app.secret.models import Secrets
+from app.user.models import Users
+from app.db import db_session
 # Методом науного тыка нашел что exc - это исключения в sqlalchemy, 
 # Есть какойто "нормальный" способ понять где в коде либы описаны исключения?
 # Есть ли какоето соглашение которое говорит модуль с исключениями называем "вот так"?.
@@ -7,16 +8,16 @@ from sqlalchemy import exc
 
 
 class AppSecret:
-    def __init__(self, name: str, user_id: int, sycret_type: int) -> None:
+    def __init__(self, name: str, user_id: int, secret_type: int) -> None:
         self.name = name
         self.user_id = user_id
-        self.sycret_type = sycret_type
+        self.secret_type = secret_type
 
     def create_secret(self):
         secret = Secrets(
                         name=self.name,
                         user_id=self.user_id,
-                        sycret_type=self.sycret_type,
+                        secret_type=self.secret_type,
                         )
         try:
             db_session.add(secret)
@@ -34,7 +35,7 @@ class AppSecret:
     def get_secret(self, secret_id: int) -> str:
         try:
             q_result = Secrets.query.filter(Secrets.id == secret_id)
-            return q_result.all()
+            return str(q_result.all())
             # Тут навернео не плохо было бы возврашать обьект и дальше с ним разбираться в других функциях.
             # А а не тупо строку сразу.
         except (exc.DataError):
@@ -50,8 +51,8 @@ class AppSecret:
         # Вот этот код про обработку экспешенов дублируется.
         # Как то можно это во что то "завернуть" чтобы не дублировать?
 
-
-    def delete_secret(self, secret_id):
+    @classmethod
+    def delete_secret(self, secret_id: int):
         try:
             user_for_delete = db_session.get(Secrets, secret_id)
             db_session.delete(user_for_delete)
@@ -129,3 +130,6 @@ if __name__ == "__main__":
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
     # Если один раз метод вызывается с ошибкой то возвращается sqlalchemy.exc.InternalError с любым параметром.
+
+    # Этот код для отладки не работает, после перехода к bluerprint views/model.
+    # Пока не понимаю в каком месте проекта правильно такие костыли для отдладки разхмещать.
