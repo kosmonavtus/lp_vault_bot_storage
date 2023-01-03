@@ -4,6 +4,7 @@ from db import db_session
 
 def get_user_data(name: str) -> str:
     # получаем данные пользователя (переменная name) из БД
+    
     user_data = db_session.query(
         Users.login,
         Users.password
