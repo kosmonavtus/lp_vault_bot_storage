@@ -131,3 +131,4 @@ dmypy.json
 settings.py
 sql_querty_test.py
 config.toml
+.flake8
