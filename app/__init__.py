@@ -1,4 +1,4 @@
-import json
+from app.db import Base
 from flask import Flask
 from flask import request
 from app.classes import AppUsers, AppSecret
@@ -9,6 +9,10 @@ import toml
 def create_app():
     app = Flask(__name__)
     app.config.from_file("./config.toml", load=toml.load)
+    #
+    # Тут должен быть инит базы.
+    # Не понял как инитнуть базу из апп.
+    #
 
     @app.route("/user", methods=['GET'])
     def user():
@@ -57,7 +61,7 @@ def create_app():
         except (BadRequestKeyError):
             return f'{request.get_data} parameter was not received'
 
-# хочу удаляьт пользователей по ID или Name из базы так и не понял как это сделать.
+    # выглядит как какойто пиздец.
     @app.route("/delete_user", methods=['POST'])
     def del_user():
         try:
