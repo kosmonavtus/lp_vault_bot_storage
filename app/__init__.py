@@ -16,7 +16,6 @@ def create_app():
 
     @app.route("/user", methods=['GET'])
     def user():
-        print(app.config)
         try:
             if request.args['user_id'].isdigit():
                 user_id = int(request.args['user_id'])
