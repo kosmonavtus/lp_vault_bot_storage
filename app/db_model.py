@@ -12,8 +12,12 @@ class Users(Base):
 
     def __repr__(self) -> dict:
         return f' {self.id}, {self.name}, {self.login}, {self.password}, {self.status}'
+        # __repr__ умеет вовращать только строку? Можно ли тут возвращать словарь?
         #return dict({'user_id':self.id, 'user_name':self.name, 'user_login':self.login, 'user_password':self.password,'user_status':self.status})
-
+        # 
+        # в ORM моделях можно городить свои "методы" которые будут что то делать с данными?
+        # Типа взять и написать тут функцию которая будеит делсть селект )
+        # Наверное так не нужно делать....
 
 class Secrets(Base):
     __tablename__ = "secrets"
@@ -25,10 +29,6 @@ class Secrets(Base):
     def __repr__(self) -> str:
         return f'{self.id}, {self.name}, {self.user_id}, {self.sycret_type}'
 
-# Пока незнаю на что хватит вермени.
-# Можно хранит отчеты данные пользователя в выдолбленной в маналитном SQL структуре.
-# А можно дать свободу и хранить какието обстрактные key:value словари и пусть что хочт то и хранит.
-
 
 class SecretType(Base):
     __tablename__ = "secret_type"
@@ -38,11 +38,6 @@ class SecretType(Base):
 
     def __repr__(self) -> str:
         return f'Secret_type {self.id}, {self.sycret_store_type}'
-
-
-# Подразумивается что могут быть отедльне разные таблицы для рахных видов данных.
-# По этому есть отедльная табличка "login_password"
-# Для логин / паролей одни, для RSA другие, для SSL X.509 третие.
 
 
 class login_password(Base):
