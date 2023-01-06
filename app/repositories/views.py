@@ -40,3 +40,4 @@ def del_secret():
         return str(result)
     except (BadRequestKeyError):
         return f'{request.get_data} parameter was not received'
+        
