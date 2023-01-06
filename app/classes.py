@@ -79,10 +79,6 @@ class AppUsers:
         except Exception as e:
             return(e)
         return True
-        #  Я вовзвращю строчки с описаниями потому что тупой и мне так проще отладить.
-        #  Но здравый смысл мне подсказывает что что то тут не так.
-        #  Не до конца понимаю что тут надо возвращать назад что бы программа себя "адекватно" вела.
-        #  А не "взрывавалась" в случае ошибки.
     @classmethod
     def get_user(cls, user_id: int) -> str:
         try:
@@ -103,8 +99,8 @@ class AppUsers:
     @classmethod
     def delete_user(self, user_id: int)-> bool:
         try:
-            user_for_delete = db_session.get(Users, user_id)
-            db_session.delete(user_for_delete)
+            stm = delete(Users).where(Users.id == user_id)
+            db_session.execute(stm)
             db_session.commit()
             return True
         except:
