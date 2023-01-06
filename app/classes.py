@@ -12,7 +12,7 @@ class AppRepo:
         self.secret_type = secret_type
 
     def create_secret(self):
-        secret = repositories(
+        secret = Repositories(
                         name=self.name,
                         user_id=self.user_id,
                         secret_type=self.secret_type,
@@ -32,7 +32,7 @@ class AppRepo:
     @classmethod
     def get_secret(self, secret_id: int) -> orm.query.Query:
         try:
-            q_result = repositories.query.filter(repositories.id == secret_id)
+            q_result = Repositories.query.filter(Repositories.id == secret_id)
             return q_result
         except (exc.DataError):
             return f'incorrect parameter secret_id: {secret_id}'
@@ -48,7 +48,7 @@ class AppRepo:
     @classmethod
     def delete_secret(self, secret_id: int):
         try:
-            stm = delete(repositories).where(repositories.id == secret_id)
+            stm = delete(Repositories).where(Repositories.id == secret_id)
             db_session.execute(stm)
             db_session.commit()
             return True
