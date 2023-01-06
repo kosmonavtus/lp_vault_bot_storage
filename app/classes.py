@@ -48,12 +48,12 @@ class AppSecret:
     @classmethod
     def delete_secret(self, secret_id: int):
         try:
-            user_for_delete = db_session.get(Secrets, secret_id)
-            db_session.delete(user_for_delete)
+            stm = delete(Secrets).where(Secrets.id == secret_id)
+            db_session.execute(stm)
             db_session.commit()
             return True
-        except Exception as e:
-            return(e)
+        except:
+            return False
 
 
 class AppUsers:
@@ -112,10 +112,10 @@ class AppUsers:
         
 
 if __name__ == "__main__":
-    print((AppUsers.get_user(19)))
-    print((AppUsers.get_user(20)))
-    print((AppUsers.get_user('asdasdas')))
-    print((AppUsers.get_user(21)))
+    #print((AppUsers.get_user(19)))
+    #print((AppUsers.get_user(20)))
+    #print((AppUsers.get_user('asdasdas')))
+    #print((AppUsers.get_user(21)))
     # Разобрался с перехватом исключений от алхимии вроде бы.
     # Но так и не понял почему 4ый принт вовзвращает исключение sqlalchemy.exc.InternalError
     # Мое предположение я не понимаю как работаетют методы классса и все дело в этом.
@@ -123,3 +123,5 @@ if __name__ == "__main__":
 
     # Этот код для отладки не работает, после перехода к bluerprint views/model.
     # Пока не понимаю в каком месте проекта правильно такие костыли для отдладки разхмещать.
+
+    pass

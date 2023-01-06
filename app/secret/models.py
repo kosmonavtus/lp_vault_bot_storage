@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean, f
 from app.db import Base
 
 
+
 class Secrets(Base):
     __tablename__ = "secrets"
     id = Column(Integer, primary_key=True)
