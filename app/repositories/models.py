@@ -3,7 +3,7 @@ from app.db import Base
 
 
 
-class Secrets(Base):
+class Repositories(Base):
     __tablename__ = "secrets"
     id = Column(Integer, primary_key=True)
     name = Column(String(170))

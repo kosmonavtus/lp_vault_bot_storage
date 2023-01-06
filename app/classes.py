@@ -1,18 +1,18 @@
-from app.secret.models import Secrets
+from app.repositories.models import repositories
 from app.user.models import Users
 from app.db import db_session
 from sqlalchemy import exc, orm
 from sqlalchemy import delete
 
 
-class AppSecret:
+class AppRepo:
     def __init__(self, name: str, user_id: int, secret_type: int) -> None:
         self.name = name
         self.user_id = user_id
         self.secret_type = secret_type
 
     def create_secret(self):
-        secret = Secrets(
+        secret = repositories(
                         name=self.name,
                         user_id=self.user_id,
                         secret_type=self.secret_type,
@@ -32,7 +32,7 @@ class AppSecret:
     @classmethod
     def get_secret(self, secret_id: int) -> orm.query.Query:
         try:
-            q_result = Secrets.query.filter(Secrets.id == secret_id)
+            q_result = repositories.query.filter(repositories.id == secret_id)
             return q_result
         except (exc.DataError):
             return f'incorrect parameter secret_id: {secret_id}'
@@ -48,7 +48,7 @@ class AppSecret:
     @classmethod
     def delete_secret(self, secret_id: int):
         try:
-            stm = delete(Secrets).where(Secrets.id == secret_id)
+            stm = delete(repositories).where(repositories.id == secret_id)
             db_session.execute(stm)
             db_session.commit()
             return True
