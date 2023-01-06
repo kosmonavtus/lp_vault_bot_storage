@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+settings.py
+sql_querty_test.py
+config.toml
+.flake8
