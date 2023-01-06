@@ -1,7 +1,7 @@
 from flask import Flask
 import toml
 from app.user.views import blueprint as user_blueprint
-from app.repositories.views import blueprint as sec_blueprint
+from app.repositories.views import blueprint as repo_blueprint
 
 def create_app():
     app = Flask(__name__)
@@ -11,5 +11,5 @@ def create_app():
     # Не понял как инитнуть базу из апп.
     #
     app.register_blueprint(user_blueprint)
-    app.register_blueprint(sec_blueprint)
+    app.register_blueprint(repo_blueprint)
     return app

@@ -1,4 +1,4 @@
-from app.repositories.models import repositories
+from app.repositories.models import Repositories
 from app.user.models import Users
 from app.db import db_session
 from sqlalchemy import exc, orm
