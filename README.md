@@ -50,17 +50,17 @@ curl -X POST -d '{"user_id": "71"}' -H 'Content-Type: application/json'  http://
 
 Получить "секрет" по ID:
 ```
-curl -X GET  http://127.0.0.1:5000/sec/secret?secret_id=10
+curl -X GET  http://127.0.0.1:5000/repo/sh_secret?secret_id=10
 ```
 
 Добавить секрет:
 ```
-curl -X POST -d '{"name": "secret_name", "user_id": "72", "secret_type": "1"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/sec/add_secret
+curl -X POST -d '{"name": "secret_name", "user_id": "72", "secret_type": "1"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/repo/add_secret
 ```
 
 Удалить секрерт по ID секрета:
 ```
-curl -X POST -d '{"secret_id": "58"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/sec/delete_secret
+curl -X POST -d '{"secret_id": "58"}' -H 'Content-Type: application/json'  http://127.0.0.1:5000/repo/delete_secret
 
 ```
 
