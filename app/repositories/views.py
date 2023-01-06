@@ -3,9 +3,9 @@ from app.classes import AppRepo
 from flask import request
 from flask import Blueprint
 
-blueprint = Blueprint('sec',__name__, url_prefix='/sec')
+blueprint = Blueprint('repositories',__name__, url_prefix='/repo')
 
-@blueprint.route("/secret", methods=['GET'])
+@blueprint.route("/sh_secret", methods=['GET'])
 def secret():
     try:
         secret_id = request.args.get('secret_id')
