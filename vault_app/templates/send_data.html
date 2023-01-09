@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <!-- action="" - используется для того,
+        чтобы сообщить веб-браузеру URL-адрес,
+        который должен использоваться при отправке информации,
+        введенной пользователем в форму -->
+        <!-- 
+            form.hidden_tag()создает скрытое поле,
+            содержащее токен, используемый для защиты
+            формы от атак CSRF -->
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.user.label }}<br>
+            {{ form.user() }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}
+
