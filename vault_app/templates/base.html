@@ -14,21 +14,30 @@
     {% endif %}
   </head>
   <body>
-		<ul class="nav">
+		<div class="nav">
 			<li class="nav-item">
-			<a class="nav-link active" aria-current="page" href="/index">Home</a>
+			<a class="nav-link active" aria-current="page" href="{{ url_for('index.index') }}">Home</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link" href="/send_data">Get secret!</a>
+			<a class="nav-link" href="{{ url_for('send_data.send_data') }}">Get secret!</a>
 			</li>
 			<li class="nav-item">
-			<a class="nav-link" href="/login">Sign in!</a>
+			<a class="nav-link" href="{{ url_for('login.login') }}">Sign in!</a>
 			</li>
 			<li class="nav-item">
 			<a class="nav-link disabled">Disabled</a>
 			</li>
-		</ul>
+		</div>
     <hr>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<ul>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
 	{% block content %}{% endblock %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

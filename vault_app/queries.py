@@ -1,6 +1,8 @@
 from webapp.user.models import Users
 from db import db_session
 
+# Данный код будет включен в приложение позже, когда подключу БД
+
 
 def get_user_data(name: str) -> str:
     # получаем данные пользователя (переменная name) из БД

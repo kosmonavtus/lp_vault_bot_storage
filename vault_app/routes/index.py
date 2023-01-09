@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 
 
+# Создаем главную страницу
 bluprint = Blueprint('index', __name__)
 
 
